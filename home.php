@@ -3,7 +3,6 @@ require_once 'main.php';
 //User home; auswählen von Jahresbilanzen bzw erstellen einer neuen
 
 
-
 $id = $_REQUEST['id'];
 $data = get_user_data($id);
 $user = $data[0];
