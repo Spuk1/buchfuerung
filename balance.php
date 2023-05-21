@@ -1,18 +1,21 @@
 <?php
 require_once 'main.php';
-session_start();
 $yearId = 0;
 $submit = "";
 if (isset($_REQUEST["balanceId"]))
     $yearId = $_REQUEST['balanceId'];
+print($yearId);
 $year = get_table($yearId)[0];
+
 $start_balance_id =get_balance_id($year[2])[0][0];
 $end_balance_id =get_balance_id($year[3])[0][0];
-print($end_balance_id);
 $start_activa = get_activa($start_balance_id);
 $start_passiva = get_passiva($start_balance_id);
 $end_activa = get_activa($end_balance_id);
 $end_passiva = get_passiva($end_balance_id);
+
+
+
 if(isset($_REQUEST["submit"]))
     $submit = $_REQUEST["submit"];
 if ($submit == "add-start-balance") {
@@ -43,9 +46,17 @@ else if($submit == "add-end-balance"){
     <body>
         <!-- form fürs erstellen einer neuen Jahresbilanz bzw fürs bearbeiten-->
         <header>
-        <h1>Year: <?php echo $year[1]?></h1>
-        <a href="./accounts.php?yearId=<?php $yearId?>">Accounts</a></header>
-        <a href="./home.php">Home</a></header>
+        
+        <form action="accounts.php">
+        <input type="hidden" value="<?php echo $yearId?>" name="yearId">
+        <input type="hidden" name="id" value="<?php echo $_REQUEST["id"]?>">
+        <input type="submit" value="accounts" name="submit" >
+    </form>
+    <form action="home.php">
+    <input type="hidden" name="id" value="<?php echo $_REQUEST["id"]?>">
+    <input type="submit" value="home" name="submit" >
+    </form></header>
+    <h1>Year: <?php echo $year[1]?></h1>
         <div id="main">
  <!-- Start bilanz-->
         <h2>Start-balance</h2>

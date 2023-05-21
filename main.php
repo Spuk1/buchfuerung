@@ -38,7 +38,7 @@ function get_tables($id){
 
 function get_table($id){
     global $con;
-    $sql = "select * from years;";
+    $sql = "select * from years where year_id = $id;";
     $result = mysqli_query($con, $sql);
     return mysqli_fetch_all($result);
 }
@@ -50,21 +50,47 @@ function get_balance_id($id){
     return mysqli_fetch_all($result);
 }
 
-function get_activa($id){
+function get_accounts($yearId) {
     global $con;
-    $sql = "Select number, value from balance_activa
-    inner join activa using(activa_id) where balance_id = $id;";
+    $sql = "select account_id from years_accounts where year_id = '$yearId';";
     $result = mysqli_query($con, $sql);
     return mysqli_fetch_all($result);
 }
-function get_passiva($id){
+function get_account_nr($id){
     global $con;
-    $sql = "Select number, value from balance_passiva
-    inner join passiva using(passiva_id) where balance_id = $id;";
+    $sql = "select * from accounts where account_id = '$id';";
     $result = mysqli_query($con, $sql);
     return mysqli_fetch_all($result);
 }
 
+function get_activa($id){
+    global $con;
+    $sql = "Select number, value from activa where balance_id = $id;";
+    $result = mysqli_query($con, $sql);
+    return mysqli_fetch_all($result);
+}
+
+function get_passiva($id){
+    global $con;
+    $sql = "Select number, value from passiva where balance_id = $id;";
+    $result = mysqli_query($con, $sql);
+    return mysqli_fetch_all($result);
+}
+
+
+function get_account_activa($id){
+    global $con;
+    $sql = "Select number, value from activa where account_id = $id;";
+    $result = mysqli_query($con, $sql);
+    return mysqli_fetch_all($result);
+}
+
+function get_account_passiva($id){
+    global $con;
+    $sql = "Select number, value from passiva where account_id = $id;";
+    $result = mysqli_query($con, $sql);
+    return mysqli_fetch_all($result);
+}
 
 function create_user($name, $password){
     global $con;
@@ -80,22 +106,12 @@ function create_user($name, $password){
 
 function add_balance($balanceId, $activa_number, $activa_value, $passiva_number, $passiva_value){
     global $con;
-    if($activa_number != NUll and $activa_value != null) {
-        $sql = "insert into activa (number, value) Values ($activa_number, $activa_value)";
-        mysqli_query($con, $sql);
-        $sql = "insert into balance_activa (balance_id, activa_id) Values ($balanceId, (SELECT    activa_id
-        FROM      activa
-        ORDER BY  activa_id DESC
-        LIMIT     1))";
+    if($activa_number != NUll and $activa_value != NULL) {
+        $sql = "insert into activa (number, value, balance_id) Values ($activa_number, $activa_value, $balanceId)";
         mysqli_query($con, $sql);
     }
     if($passiva_number != NUll and $passiva_value != null) {
-        $sql = "insert into passiva (number, value) Values ($passiva_number, $passiva_value)";
-        mysqli_query($con, $sql);
-        $sql = "insert into balance_passiva (balance_id, passiva_id) Values ($balanceId, (SELECT    passiva_id
-        FROM      passiva
-        ORDER BY  passiva_id DESC
-        LIMIT     1))";
+        $sql = "insert into passiva (number, value, balance_id) Values ($passiva_number, $passiva_value, $balanceId)";
         mysqli_query($con, $sql);
     }
     
@@ -104,20 +120,61 @@ function add_balance($balanceId, $activa_number, $activa_value, $passiva_number,
 function delete_balance($balanceId, $activa_number, $activa_value, $passiva_number, $passiva_value){
     global $con;
     if($activa_number != NUll and $activa_value != null) {
-        $sql = "delete from balance_activa where activa_id = (select activa_id from activa where number = $activa_number and value = $activa_value Order by activa_id DESC Limit 1);";
-        mysqli_query($con, $sql);
-        $sql = "delete from activa where activa_id = (select activa_id from activa where number = $activa_number and value = $activa_value Order by activa_id DESC Limit 1);";
+        $sql = "delete from activa where activa_id = (select activa_id from activa where number = $activa_number and value = $activa_value and balance_id = $balanceId);";
         mysqli_query($con, $sql);
     }
     if($passiva_number != NUll and $passiva_value != null) {
-        $sql = "delete from balance_passiva where passiva_id = (select passiva_id from passiva where number = $passiva_number and value = $passiva_value Order by passiva_id DESC Limit 1);";
-        mysqli_query($con, $sql);
-        $sql = "delete from passiva where passiva_id = (select passiva_id from passiva where number = $passiva_number and value = $passiva_value Order by passiva_id DESC Limit 1 );";
+        $sql = "delete from passiva where passiva_id = (select passiva_id from passiva where number = $passiva_number and value = $passiva_value and balance_id = $balanceId);";
         mysqli_query($con, $sql);
     }
     
 };
 
 
+function add_account($accountId, $activa_number, $activa_value, $passiva_number, $passiva_value){
+    global $con;
+    if($activa_number != NUll and $activa_value != NULL) {
+        $sql = "insert into activa (number, value, account_id) Values ($activa_number, $activa_value, $accountId)";
+        mysqli_query($con, $sql);
+    }
+    if($passiva_number != NUll and $passiva_value != null) {
+        $sql = "insert into passiva (number, value, account_id) Values ($passiva_number, $passiva_value, $accountId)";
+        mysqli_query($con, $sql);
+    }
+    
+};
 
+function delete_account($accountId, $activa_number, $activa_value, $passiva_number, $passiva_value){
+    global $con;
+    if($activa_number != NUll and $activa_value != null) {
+        $sql = "delete from activa where activa_id = (select activa_id from activa where number = $activa_number and value = $activa_value and account_id = $accountId);";
+        mysqli_query($con, $sql);
+    }
+    if($passiva_number != NUll and $passiva_value != null) {
+        $sql = "delete from passiva where passiva_id = (select passiva_id from passiva where number = $passiva_number and value = $passiva_value and account_id = $accountId);";
+        mysqli_query($con, $sql);
+    }
+    
+};
+
+function create_new_account($number, $yearId){
+    global $con;
+    $sql = "insert into accounts (number) Values ($number);";
+    mysqli_query($con,$sql);
+    $sql = "insert into years_accounts (year_id, account_id) Values ($yearId, (Select account_id from accounts where number = $number order by account_id DESC Limit 1))";
+    mysqli_query($con, $sql);
+}
+
+
+function create_new_year($date, $id){
+    global $con;
+    $sql = "insert into balance (type) Values ('start');";
+    mysqli_query($con,$sql);
+    $sql = "insert into balance (type) Values ('end');";
+    mysqli_query($con,$sql);
+    $sql = "insert into years (year, start_balance, end_balance) Values ('$date', (Select balance_id from balance where type = 'start' order by balance_id DESC Limit 1),(Select balance_id from balance where type = 'end' order by balance_id DESC Limit 1));";
+    mysqli_query($con,$sql);
+    $sql = "insert into user_years (user_id, year_id) Values ($id, (Select year_id from years where year = '$date' order by year_id desc limit 1));";
+    mysqli_query($con,$sql);
+}
 ?>
