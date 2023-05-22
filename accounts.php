@@ -53,9 +53,10 @@ else if($submit == "Create new table"){
         <form action="home.php">
         <input type="hidden" name="id" value="<?php echo $_REQUEST["id"]?>">
         <input type="submit" value="home" name="submit" >
-        </form></header>
+        </form>
+        </header>
 
-        <div>
+        <div style="width: 600px;">
             <form method="post">
                 <p>Table number: </p>
                 <input type="number" name="number">
@@ -94,6 +95,6 @@ else if($submit == "Create new table"){
             </form>
             <?php endforeach;?>
         
-        
+            <img id="image" src="./Kontenplan.png">
     </body>
 <html>

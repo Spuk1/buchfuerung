@@ -109,6 +109,6 @@ else if($submit == "add-end-balance"){
             <input type="text"  name="end_activa_number"><input type="text"  name="end_activa_value"><input type="text"  name="end_passiva_number"><input type="text"  name="end_passiva_value">
             <input style="grid-column: 2;" type="submit" value="add-end-balance" name="submit"><input type="submit" value="delete-end-balance" name="submit">
         </form>
-        
+        <img id="image" src="./Kontenplan.png">
     </body>
 </html>

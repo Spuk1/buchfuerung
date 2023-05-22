@@ -92,6 +92,13 @@ function get_account_passiva($id){
     return mysqli_fetch_all($result);
 }
 
+
+function check_username($name){
+    global $con;
+    $sql = "select name from users where name = '$name'";
+    $result = mysqli_query($con, $sql);
+    return (mysqli_fetch_array($result) != NULL);
+}
 function create_user($name, $password){
     global $con;
     $sql = "select * from users where name = '$name'";

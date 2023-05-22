@@ -13,7 +13,11 @@ if(($_REQUEST["submit"] == "login")){
     else $message =  'Wrong password or username!';
 }
 elseif ($_REQUEST["submit"] == "register"){
-    $message = create_user($_REQUEST["name"],$_REQUEST["password"]);
+    if (!check_username($_REQUEST["name"])){
+        //$message = create_user($_REQUEST["name"],$_REQUEST["password"]);
+        $message = "created";
+}
+    else $message = "user allready exists";
 }
 
 

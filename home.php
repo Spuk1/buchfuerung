@@ -10,16 +10,17 @@ $tables = get_tables($id);
 
 if($_REQUEST["submit"] == "insert"){
     $dupl = false;
+    print(substr($tables[0][1],0,4) == substr($_REQUEST["date"], 0, 4));
     foreach ($tables as $year) {
-        if(strpos($year[0],substr($_REQUEST["date"], 0, 4)) == 0){
+        if(substr($year[1],0,4) == substr($_REQUEST["date"], 0, 4)){
             $dupl = true;
         }
     }
-    if($dupl){
+    if(!$dupl){
         create_new_year($_REQUEST["date"], $id);
-        header("Location:./home.php?id=$id");
+        print("Erstellt!");
     }
-    else print("allready exists!");
+    else print("Existiert bereits!");
     
 }
 
@@ -30,8 +31,9 @@ if($_REQUEST["submit"] == "insert"){
         <link rel="stylesheet" href="main.css">
         <title>Home</title>
     </head>
-    <body>
+    <body style="width: 600px; margin: auto;">
         <h1 id="header">Willkommen <?php echo $user[1]?></h1>
+        <h3>Wähle aus welches Jahr du bearbeiten möchtest</h3>
         <div id="grid">
         <form method="POST" action="balance.php">
                     <select name="balanceId">
