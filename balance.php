@@ -50,16 +50,16 @@ else if($submit == "add-end-balance"){
         <form action="accounts.php">
         <input type="hidden" value="<?php echo $yearId?>" name="yearId">
         <input type="hidden" name="id" value="<?php echo $_REQUEST["id"]?>">
-        <input type="submit" value="accounts" name="submit" >
+        <input type="submit" value="Kontos" name="submit" >
     </form>
     <form action="home.php">
     <input type="hidden" name="id" value="<?php echo $_REQUEST["id"]?>">
     <input type="submit" value="home" name="submit" >
     </form></header>
-    <h1>Year: <?php echo $year[1]?></h1>
+    <h1>Jahr: <?php echo $year[1]?></h1>
         <div id="main">
  <!-- Start bilanz-->
-        <h2>Start-balance</h2>
+        <h2>Start Bilanz</h2>
         <div id="start_balance" class="balance">
             
             <div class="items">
@@ -86,7 +86,7 @@ else if($submit == "add-end-balance"){
 
 
         <!-- End bilanz-->
-        <h2>End-balance</h2>
+        <h2>Schluss Bilanz</h2>
         <div id="end_balance" class="balance">
             
             <div class="items">

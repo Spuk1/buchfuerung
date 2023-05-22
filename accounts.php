@@ -17,7 +17,7 @@ else if($submit == "delete"){
     delete_account($_REQUEST["account_id"],$_REQUEST["start_activa_number"],$_REQUEST["start_activa_value"],$_REQUEST["start_passiva_number"], $_REQUEST["start_passiva_value"]);
     header("Location:./accounts.php?yearId=$yearId");
 }
-else if($submit == "Create new table"){
+else if($submit == "Neues Konto"){
     $dupl = false;
     foreach($accounts as $acc){
       if  ($_REQUEST["number"] == get_account_nr($acc[0])[0][1]){
@@ -28,7 +28,7 @@ else if($submit == "Create new table"){
         create_new_account($_REQUEST["number"], $yearId);
         header("Location:./accounts.php?yearId=$yearId");
     }
-    else print("Allready exists");
+    else print("Existiert bereits");
     
 }
 
@@ -39,7 +39,7 @@ else if($submit == "Create new table"){
 <html>
     <head>
         <link rel="stylesheet" href="main.css">
-        <title>balance</title>
+        <title>Kontos</title>
     </head>
     <body>
         <!-- form fürs erstellen einer neuen Jahresbilanz bzw fürs bearbeiten-->
@@ -58,9 +58,9 @@ else if($submit == "Create new table"){
 
         <div style="width: 600px;">
             <form method="post">
-                <p>Table number: </p>
+                <p>Konto nummer: </p>
                 <input type="number" name="number">
-                <input type="submit" name="submit" value="Create new table">
+                <input type="submit" name="submit" value="Neues Konto">
             </form>
         </div>
         
