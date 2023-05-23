@@ -7,6 +7,7 @@ if (isset($_REQUEST["yearId"]))
     $yearId = $_REQUEST['yearId'];
 $accounts = get_accounts($yearId);
 $items = get_items();
+$year = get_table($yearId)[0];
 
 if (isset($_REQUEST["submit"]))
     $submit = $_REQUEST["submit"];
@@ -45,7 +46,9 @@ if ($submit == "add") {
 <body>
     <!-- form fürs erstellen einer neuen Jahresbilanz bzw fürs bearbeiten-->
     <header>
-
+        <h1>Jahr:
+            <?php echo $year[1] ?>
+        </h1>
         <form action="balance.php">
             <input type="hidden" value="<?php echo $yearId ?>" name="balanceId">
             <input type="hidden" name="id" value="<?php echo $_REQUEST["id"] ?>">

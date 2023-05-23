@@ -5,13 +5,16 @@ require_once 'main.php';
 
 $id = 0;
 $message = "";
-if (($_REQUEST["submit"] == "login")) {
+$submit = "";
+if(isset($_REQUEST["submit"])) $submit = $_REQUEST["submit"];
+
+if (($submit == "login")) {
     $id = get_id($_REQUEST["name"], $_REQUEST["password"]);
     if ($id) {
         header("Location:./home.php?id=$id");
     } else
         $message = 'Wrong password or username!';
-} elseif ($_REQUEST["submit"] == "register") {
+} elseif ($submit == "register") {
     if (!check_username($_REQUEST["name"])) {
         $message = create_user($_REQUEST["name"], $_REQUEST["password"]);
         $message = "created";

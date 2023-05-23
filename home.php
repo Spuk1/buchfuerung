@@ -7,10 +7,12 @@ $id = $_REQUEST['id'];
 $data = get_user_data($id);
 $user = $data[0];
 $tables = get_tables($id);
+$submit = "";
 
-if ($_REQUEST["submit"] == "insert") {
+if (isset($_REQUEST["submit"])) $submit = $_REQUEST["submit"];
+
+if ($submit == "insert") {
     $dupl = false;
-    print(substr($tables[0][1], 0, 4) == substr($_REQUEST["date"], 0, 4));
     foreach ($tables as $year) {
         if (substr($year[1], 0, 4) == substr($_REQUEST["date"], 0, 4)) {
             $dupl = true;
@@ -18,8 +20,9 @@ if ($_REQUEST["submit"] == "insert") {
     }
     if (!$dupl) {
         create_new_year($_REQUEST["date"], $id);
-        header("Location:./home.php?id=$id");
         print("Erstellt!");
+        header("Location:./home.php?id=$id");
+        
     } else
         print("Existiert bereits!");
 

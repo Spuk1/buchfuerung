@@ -44,7 +44,9 @@ if ($submit == "add-start-balance") {
 <body>
     <!-- form fürs erstellen einer neuen Jahresbilanz bzw fürs bearbeiten-->
     <header>
-
+        <h1>Jahr:
+            <?php echo $year[1] ?>
+        </h1>
         <form action="accounts.php">
             <input type="hidden" value="<?php echo $yearId ?>" name="yearId">
             <input type="hidden" value="<?php echo $_REQUEST["id"] ?>" name="id">
@@ -58,9 +60,7 @@ if ($submit == "add-start-balance") {
             <input type="submit" value="Logout" name="submit">
         </form>
     </header>
-    <h1>Jahr:
-        <?php echo $year[1] ?>
-    </h1>
+    
     <div id="main">
         <!-- Start bilanz-->
         <h2>Start Bilanz</h2>

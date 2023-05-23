@@ -16,12 +16,13 @@ header {
     text-align: center;
     text-decoration: underline;
     background-color: gray;
-    width: 80%;
+    width: 78%;
     height: 50px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 6fr;
-    justify-content: left;
+    grid-template-columns: 2fr 1fr 1fr 1fr 4fr;
+    justify-content: center;
     align-items: center;
+    padding: 5px;
 }
 
 .balance {
